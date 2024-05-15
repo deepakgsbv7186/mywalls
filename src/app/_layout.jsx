@@ -12,7 +12,7 @@ export default function _layout() {
         }}
       />
       <Stack.Screen
-        name="home"
+        name="home/index"
         options={{
           headerShown: false,
         }}

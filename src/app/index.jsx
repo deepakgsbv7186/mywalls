@@ -1,21 +1,40 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
-import { theme } from "../utils/Theme";
-import { imgpath } from "../assets/images";
+import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
-import Animated, { FadeInDown } from "react-native-reanimated";
-import {
-  moderateScale,
-  moderateScaleVertical,
-  textScale,
-  width,
-} from "../utils/Responsive";
 import { useRouter } from "expo-router";
+import * as SplashScreen from "expo-splash-screen";
+import React, { useCallback } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
+import { imgpath } from "../assets/images";
+import { theme } from "../utils/Theme";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function Welcome() {
   const router = useRouter();
+  const [fontsLoaded, fontError] = useFonts({
+    "SpaceMono-Regular": require("../assets/fonts/SpaceMono-Regular.ttf"),
+    "Poppins-Black": require("../assets/fonts/Poppins-Black.ttf"),
+    "Poppins-ExtraBold": require("../assets/fonts/Poppins-ExtraBold.ttf"),
+    "Poppins-Bold": require("../assets/fonts/Poppins-Bold.ttf"),
+    "Poppins-SemiBold": require("../assets/fonts/Poppins-SemiBold.ttf"),
+    "Poppins-Medium": require("../assets/fonts/Poppins-Medium.ttf"),
+    "Poppins-Regular": require("../assets/fonts/Poppins-Regular.ttf"),
+    "Poppins-Light": require("../assets/fonts/Poppins-Light.ttf"),
+    "Poppins-ExtraLight": require("../assets/fonts/Poppins-ExtraLight.ttf"),
+  });
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
+
+  if (!fontsLoaded && !fontError) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <Image
         source={imgpath.welcome}
         style={styles.bgImage}
@@ -45,7 +64,7 @@ export default function Welcome() {
             entering={FadeInDown.delay(500).springify()}
             style={styles.punchLine}
           >
-            Wallpaper That Matters To Me
+            Wallpaper That Matters To You
           </Animated.Text>
           <Animated.View entering={FadeInDown.delay(600).springify()}>
             <Pressable
@@ -81,30 +100,30 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "flex-end",
-    gap: theme.sizes.lg,
+    gap: theme.sizes.lg16,
   },
   title: {
-    fontSize: textScale(50),
-    fontWeight: theme.fontWeights.bold,
+    fontFamily: theme.fonts.Poppins600,
+    fontSize: theme.fontsize.xs10 * 4,
     color: theme.colors.black,
   },
   punchLine: {
-    fontSize: textScale(24),
-    fontWeight: theme.fontWeights.semibold,
+    fontFamily: theme.fonts.Poppins400,
+    fontSize: theme.fontsize.sm12 * 1.5,
     color: theme.colors.neutral(0.9),
   },
   btnStyle: {
-    marginBottom: moderateScaleVertical(50),
+    marginBottom: theme.verticalsizes.xs10 * 5,
     backgroundColor: theme.colors.neutral(0.9),
-    padding: moderateScale(14),
-    minWidth: width * 0.8,
-    borderRadius: theme.sizes.sm,
+    padding: theme.sizes.md14,
+    minWidth: theme.width * 0.8,
+    borderRadius: theme.sizes.sm12,
     borderCurve: "continuous",
   },
   btnText: {
+    fontFamily: theme.fonts.Poppins500,
     textAlign: "center",
-    fontSize: textScale(18),
-    fontWeight: theme.fontWeights.bold,
+    fontSize: theme.fontsize.xl18,
     color: theme.colors.white,
     letterSpacing: 2,
   },

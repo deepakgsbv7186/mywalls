@@ -27,7 +27,21 @@
       "favicon": "./src/assets/images/react-logo.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "SpaceRegular": ["./src/assets/fonts/SpaceMono-Regular.ttf"],
+          "Poppins900": ["./src/assets/fonts/Poppins-Black.ttf"],
+          "Poppins800": ["./src/assets/fonts/Poppins-ExtraBold.ttf"],
+          "Poppins700": ["./src/assets/fonts/Poppins-Bold.ttf"],
+          "Poppins600": ["./src/assets/fonts/Poppins-SemiBold.ttf"],
+          "Poppins500": ["./src/assets/fonts/Poppins-Medium.ttf"],
+          "Poppins400": ["./src/assets/fonts/Poppins-Regular.ttf"],
+          "Poppins300": ["./src/assets/fonts/Poppins-Light.ttf"],
+          "Poppins200": ["./src/assets/fonts/Poppins-ExtraLight.ttf"],
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

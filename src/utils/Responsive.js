@@ -32,6 +32,4 @@ export {
   textScale,
   moderateScale,
   moderateScaleVertical,
-  width,
-  height,
 };
