@@ -1,5 +1,6 @@
 import { Feather, Ionicons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import { debounce } from "lodash";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   Pressable,
   ScrollView,
@@ -8,11 +9,63 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { theme } from "../../utils/Theme";
+import { callApi } from "../../api";
 import Categories from "../../components/categories";
+import { theme } from "../../utils/Theme";
+import ImageGrid from "./ImageGrid";
 
+let page = 1;
 export default function Home() {
+  const searchRef = useRef(null);
   const [searchText, setSearchText] = useState("");
+  const [activeCategory, setActiveCategory] = useState("");
+  const [images, setImages] = useState([]);
+
+  const handleChangeCategory = (_category) => {
+    setActiveCategory(_category);
+    setImages([]);
+    page = 1;
+    let params = { page };
+    if (_category) params.category = _category;
+    fetchImages(params, false);
+  };
+
+  const fetchImages = async (params = { page: 1 }, append = false) => {
+    console.log("🚀 ~ fetchImages ~ params:", params);
+
+    let result = await callApi(params);
+    if (result?.success && result?.data?.hits) {
+      if (append) {
+        setImages([...images, ...result?.data?.hits]);
+      } else {
+        setImages([...result?.data?.hits]);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
+
+  const handleSearch = (text) => {
+    setSearchText(text);
+    if (text.length > 2) {
+      page = 1;
+      setImages([]);
+      setActiveCategory(null);
+      fetchImages({ page, q: text }, false);
+    }
+    if (text === "") {
+      page = 1;
+      setImages([]);
+      setActiveCategory(null);
+      searchRef.current.clear();
+      fetchImages({ page }, false);
+    }
+  };
+
+  const handleSearchDebounce = useCallback(debounce(handleSearch, 400), []);
+
   return (
     <View style={styles.container}>
       <View style={styles.headContainer}>
@@ -36,14 +89,14 @@ export default function Home() {
             />
           </View>
           <TextInput
+            ref={searchRef}
             placeholder="Search for wallpapers..."
             style={styles.searchInput}
             maxLength={30}
-            value={searchText}
-            onChangeText={(search) => setSearchText(search)}
+            onChangeText={handleSearchDebounce}
           />
           {searchText && (
-            <Pressable onPress={() => setSearchText("")}>
+            <Pressable onPress={() => handleSearch("")}>
               <Ionicons
                 name="close"
                 size={theme.fontsize.sm12 * 2}
@@ -53,8 +106,12 @@ export default function Home() {
           )}
         </View>
         <View>
-          <Categories />
+          <Categories
+            activeCategory={activeCategory}
+            handleChangeCategory={handleChangeCategory}
+          />
         </View>
+        <View>{images?.length > 0 && <ImageGrid images={images} />}</View>
       </ScrollView>
     </View>
   );

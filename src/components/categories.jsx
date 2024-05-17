@@ -1,9 +1,10 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { FlatList, Pressable, StyleSheet, Text } from "react-native";
+import Animated, { FadeInRight } from "react-native-reanimated";
 import categoriesList from "../constants/categoriesList";
 import { theme } from "../utils/Theme";
 
-export default function Categories() {
+export default function Categories({ activeCategory, handleChangeCategory }) {
   return (
     <FlatList
       horizontal
@@ -12,19 +13,41 @@ export default function Categories() {
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.flatlistContainer}
       renderItem={({ item, index }) => (
-        <CategoryPill title={item} currentIndex={index} />
+        <CategoryPill
+          title={item}
+          currentIndex={index}
+          isActive={activeCategory === item}
+          handleChangeCategory={handleChangeCategory}
+        />
       )}
     />
   );
 }
 
-const CategoryPill = ({ title, currentIndex }) => {
+const CategoryPill = ({
+  title,
+  currentIndex,
+  isActive,
+  handleChangeCategory,
+}) => {
+  const color = isActive ? theme.colors.white : theme.colors.neutral(0.8);
+  const backgroundColor = isActive
+    ? theme.colors.neutral(0.8)
+    : theme.colors.white;
   return (
-    <View>
-      <Pressable style={styles.pillContainer}>
-        <Text style={styles.title}>{title}</Text>
+    <Animated.View
+      entering={FadeInRight.delay(currentIndex * 200)
+        .duration(2000)
+        .springify()
+        .damping(14)}
+    >
+      <Pressable
+        onPress={() => handleChangeCategory(isActive ? null : title)}
+        style={[styles.pillContainer, { backgroundColor }]}
+      >
+        <Text style={[styles.title, { color }]}>{title}</Text>
       </Pressable>
-    </View>
+    </Animated.View>
   );
 };
 
