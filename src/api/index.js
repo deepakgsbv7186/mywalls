@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = "43829584-e6d6d2f8ea98f21c67ac7386b";
+const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 
 const URL = `https://pixabay.com/api/?key=${API_KEY}`;
 
