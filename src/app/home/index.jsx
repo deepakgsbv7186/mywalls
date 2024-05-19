@@ -13,10 +13,12 @@ import { callApi } from "../../api";
 import Categories from "../../components/categories";
 import { theme } from "../../utils/Theme";
 import ImageGrid from "./ImageGrid";
+import FilterModal from "./FilterModal";
 
 let page = 1;
 export default function Home() {
   const searchRef = useRef(null);
+  const modalRef = useRef(null);
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
   const [images, setImages] = useState([]);
@@ -65,14 +67,16 @@ export default function Home() {
   };
 
   const handleSearchDebounce = useCallback(debounce(handleSearch, 400), []);
-
+  const handlePresentModalPress = useCallback(() => {
+    modalRef.current?.present();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.headContainer}>
         <Pressable>
           <Text style={styles.titleText}>My Walls</Text>
         </Pressable>
-        <Pressable>
+        <Pressable onPress={handlePresentModalPress}>
           <Ionicons name="filter" size={24} color={theme.colors.neutral(0.7)} />
         </Pressable>
       </View>
@@ -112,6 +116,7 @@ export default function Home() {
           />
         </View>
         <View>{images?.length > 0 && <ImageGrid images={images} />}</View>
+        <FilterModal modalRef={modalRef} />
       </ScrollView>
     </View>
   );
