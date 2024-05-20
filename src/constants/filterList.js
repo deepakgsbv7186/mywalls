@@ -1,8 +1,8 @@
 export default {
   order: ["popular", "latest"],
-  orientation: ["horizontal", "portrait"],
+  orientation: ["horizontal", "vertical"],
   type: ["photo", "illustration", "vector"],
-  color: [
+  colors: [
     "red",
     "orange",
     "yellow",

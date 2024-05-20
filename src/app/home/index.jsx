@@ -22,6 +22,8 @@ export default function Home() {
   const [searchText, setSearchText] = useState("");
   const [activeCategory, setActiveCategory] = useState("");
   const [images, setImages] = useState([]);
+  const [filters, setFilters] = useState({});
+  console.log("🚀 ~ Home ~ filters:", filters);
 
   const handleChangeCategory = (_category) => {
     setActiveCategory(_category);
@@ -116,7 +118,11 @@ export default function Home() {
           />
         </View>
         <View>{images?.length > 0 && <ImageGrid images={images} />}</View>
-        <FilterModal modalRef={modalRef} />
+        <FilterModal
+          modalRef={modalRef}
+          filters={filters}
+          setFilters={setFilters}
+        />
       </ScrollView>
     </View>
   );

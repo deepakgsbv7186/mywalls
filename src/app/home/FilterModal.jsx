@@ -2,14 +2,16 @@ import { BottomSheetModal, BottomSheetView } from "@gorhom/bottom-sheet";
 import { BlurView } from "expo-blur";
 import React, { useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { theme } from "../../utils/Theme";
 import Animated, {
   Extrapolation,
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import SectionView from "../../components/SectionView";
+import filterList from "../../constants/filterList";
+import { theme } from "../../utils/Theme";
 
-export default function FilterModal({ modalRef }) {
+export default function FilterModal({ modalRef, setFilters, filters }) {
   const snapPoints = useMemo(() => ["75%"], []);
   return (
     <BottomSheetModal
@@ -24,7 +26,15 @@ export default function FilterModal({ modalRef }) {
       <BottomSheetView style={styles.contentContainer}>
         <View style={styles.content}>
           <Text style={styles.filterText}>Filters</Text>
-          <Text>Section</Text>
+          {Object.entries(filterList).map(([title, data]) => (
+            <SectionView
+              data={data}
+              title={title}
+              key={title}
+              setFilters={setFilters}
+              filters={filters}
+            />
+          ))}
         </View>
       </BottomSheetView>
     </BottomSheetModal>
@@ -56,21 +66,6 @@ const CustomBackdrop = ({ animatedIndex, style }) => {
   );
 };
 
-const sections = {
-  order: (props) => <SectionView {...props} />,
-  orientation: (props) => <SectionView {...props} />,
-  type: (props) => <SectionView {...props} />,
-  colors: (props) => <SectionView {...props} />,
-};
-
-const SectionView = () => {
-  return (
-    <View>
-      <Text>Section View</Text>
-    </View>
-  );
-};
-
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
@@ -84,7 +79,7 @@ const styles = StyleSheet.create({
     gap: theme.verticalsizes.md14,
   },
   filterText: {
-    fontFamily: theme.fonts.Poppins500,
+    fontFamily: theme.fonts.Poppins600,
     fontSize: theme.fontsize.xl18,
     color: theme.colors.neutral(0.8),
   },
