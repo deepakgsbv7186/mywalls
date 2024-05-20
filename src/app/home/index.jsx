@@ -23,7 +23,6 @@ export default function Home() {
   const [activeCategory, setActiveCategory] = useState("");
   const [images, setImages] = useState([]);
   const [filters, setFilters] = useState({});
-  console.log("🚀 ~ Home ~ filters:", filters);
 
   const handleChangeCategory = (_category) => {
     setActiveCategory(_category);
@@ -72,6 +71,14 @@ export default function Home() {
   const handlePresentModalPress = useCallback(() => {
     modalRef.current?.present();
   }, []);
+  const resetFilters = () => {
+    setFilters({});
+    modalRef.current?.close();
+  };
+  const applyFilters = () => {
+    console.log("🚀 ~ Home ~ filters:", filters);
+    modalRef.current?.close();
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headContainer}>
@@ -122,6 +129,8 @@ export default function Home() {
           modalRef={modalRef}
           filters={filters}
           setFilters={setFilters}
+          applyFilters={applyFilters}
+          resetFilters={resetFilters}
         />
       </ScrollView>
     </View>
