@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
   flatlistContainer: {
     paddingHorizontal: theme.sizes.sm12,
     gap: theme.sizes.lg16 / 2,
-    paddingVertical: theme.sizes.xs10 / 10,
   },
   pillContainer: {
     padding: theme.sizes.xs10,

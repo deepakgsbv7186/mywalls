@@ -7,7 +7,7 @@ export default function ColorsView({ title, data, filters, setFilters }) {
     setFilters({ ...filters, [title]: item });
   };
   return (
-    <View>
+    <>
       <Text style={styles.sectionTitle}>{title}</Text>
       <View style={styles.sectionContainer}>
         {data &&
@@ -25,7 +25,7 @@ export default function ColorsView({ title, data, filters, setFilters }) {
             );
           })}
       </View>
-    </View>
+    </>
   );
 }
 

@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, {
   Extrapolation,
+  FadeInDown,
   interpolate,
   useAnimatedStyle,
 } from "react-native-reanimated";
@@ -33,20 +34,30 @@ export default function FilterModal({
       <BottomSheetView style={styles.contentContainer}>
         <View style={styles.content}>
           <Text style={styles.filterText}>Filters</Text>
-          {Object.entries(filterList).map(([title, data]) => {
+          {Object.entries(filterList).map(([title, data], index) => {
             const Component = sections[title];
             return (
-              <Component
-                key={title}
-                data={data}
-                title={title}
-                setFilters={setFilters}
-                filters={filters}
-              />
+              <Animated.View
+                key={index}
+                entering={FadeInDown.delay(index * 100)
+                  .springify()
+                  .damping(10)}
+              >
+                <Component
+                  key={index}
+                  data={data}
+                  title={title}
+                  setFilters={setFilters}
+                  filters={filters}
+                />
+              </Animated.View>
             );
           })}
 
-          <View style={styles.bottomBtnContainer}>
+          <Animated.View
+            entering={FadeInDown.springify().damping(10)}
+            style={styles.bottomBtnContainer}
+          >
             <Pressable
               style={[styles.btnContainer, { backgroundColor: "transparent" }]}
               onPress={resetFilters}
@@ -60,7 +71,7 @@ export default function FilterModal({
             <Pressable style={styles.btnContainer} onPress={applyFilters}>
               <Text style={styles.btnText}>Apply</Text>
             </Pressable>
-          </View>
+          </Animated.View>
         </View>
       </BottomSheetView>
     </BottomSheetModal>
@@ -109,7 +120,6 @@ const styles = StyleSheet.create({
   content: {
     padding: theme.verticalsizes.md14,
     gap: theme.verticalsizes.md14,
-    // backgroundColor: "red",
   },
   filterText: {
     fontFamily: theme.fonts.Poppins600,
