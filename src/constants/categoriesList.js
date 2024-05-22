@@ -1,7 +1,5 @@
 export default [
   "backgrounds",
-  "fashions",
-  "nature",
   "science",
   "education",
   "feelings",
@@ -19,4 +17,6 @@ export default [
   "buildings",
   "business",
   "music",
+  "fashions",
+  "nature",
 ];

@@ -7,6 +7,7 @@ import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { imgpath } from "../assets/images";
 import { theme } from "../utils/Theme";
+import Toast from "react-native-toast-message";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -76,6 +77,7 @@ export default function Welcome() {
           </Animated.View>
         </View>
       </Animated.View>
+      <Toast />
     </View>
   );
 }

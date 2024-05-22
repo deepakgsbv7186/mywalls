@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   overlay: {
-    backgroundColor: theme.colors.neutral(0.2),
+    backgroundColor: theme.colors.neutral(0.6),
   },
   content: {
     padding: theme.verticalsizes.md14,

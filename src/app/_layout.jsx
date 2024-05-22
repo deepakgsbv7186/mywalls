@@ -12,12 +12,22 @@ export default function _layout() {
             name="index"
             options={{
               headerShown: false,
+              animation: "slide_from_bottom",
             }}
           />
           <Stack.Screen
             name="home/index"
             options={{
               headerShown: false,
+              animation: "slide_from_right",
+            }}
+          />
+          <Stack.Screen
+            name="home/image"
+            options={{
+              headerShown: false,
+              animation: "slide_from_bottom",
+              presentation: "transparentModal",
             }}
           />
         </Stack>
