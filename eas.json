@@ -1,0 +1,22 @@
+{
+  "cli": {
+    "version": ">= 9.0.8"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal",
+      "env": {
+        "EXPO_PUBLIC_API_KEY": "43829584-e6d6d2f8ea98f21c67ac7386b",
+        "APP_NAME": "My Walls"
+      }
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {}
+  }
+}

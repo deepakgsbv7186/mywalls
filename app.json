@@ -3,12 +3,12 @@
     "name": "mywalls",
     "slug": "mywalls",
     "version": "1.0.0",
-    "orientation": "all",
-    "icon": "./src/assets/images/react-logo.png",
+    "orientation": "portrait",
+    "icon": "./src/assets/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./src/assets/images/react-logo.png",
+      "image": "./src/assets/images/react-logo@3x.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,34 +17,29 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/react-logo.png",
+        "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.mywalls.dev"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./src/assets/images/react-logo.png"
+      "favicon": "./src/assets/icon.png"
     },
     "plugins": [
-      "expo-router",
-      [
-        "expo-font",
-        {
-          "SpaceRegular": ["./src/assets/fonts/SpaceMono-Regular.ttf"],
-          "Poppins900": ["./src/assets/fonts/Poppins-Black.ttf"],
-          "Poppins800": ["./src/assets/fonts/Poppins-ExtraBold.ttf"],
-          "Poppins700": ["./src/assets/fonts/Poppins-Bold.ttf"],
-          "Poppins600": ["./src/assets/fonts/Poppins-SemiBold.ttf"],
-          "Poppins500": ["./src/assets/fonts/Poppins-Medium.ttf"],
-          "Poppins400": ["./src/assets/fonts/Poppins-Regular.ttf"],
-          "Poppins300": ["./src/assets/fonts/Poppins-Light.ttf"],
-          "Poppins200": ["./src/assets/fonts/Poppins-ExtraLight.ttf"],
-        }
-      ]
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "6e04ffab-9865-47aa-a68a-63a6561e4dbe"
+      }
     }
   }
 }

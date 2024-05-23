@@ -92,7 +92,7 @@ export default function ImageScreen() {
     <BlurView
       tint="dark"
       intensity={Platform.OS === "web" ? 30 : 10}
-      // experimentalBlurMethod="dimezisBlurView"
+      experimentalBlurMethod="dimezisBlurView"
       style={styles.container}
     >
       <View style={[styles.imgStyle, getSize()]}>
